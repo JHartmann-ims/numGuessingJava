@@ -1,0 +1,86 @@
+import java.util.*;
+
+public  class NumGiuessing {
+    public static void main (String[] args) {
+        boolean gameRestart = true; 
+        
+        while (gameRestart == true) {
+        
+            // Random Nummer Objekt erstellen
+            Random rnd = new Random();
+        
+            // Nummer zwischen 1-100 erzeuugen
+            int rndNum = rnd.nextInt(100) + 1;
+            boolean rndNumGuessed = false;
+            long startTime = System.currentTimeMillis(); // Stopwactch beginnt 
+            int numOfGuesses = 0;
+        
+            System.out.print("Ich habe mir eine Zahl zwischen 1-100 ausgedacht... ");
+            System.out.println("Erraten Sie sie und Sie gewinnen!");
+       
+            // loop für mehrmals erraten können
+            while (rndNumGuessed == false) {
+                numOfGuesses++;
+                Scanner rndNumGuessSc = new Scanner(System.in);
+                
+                try {
+                    System.out.println("Erraten Sie die Zahl: ");
+        
+                    int rndNumGuess = rndNumGuessSc.nextInt();
+                    
+                    if (rndNumGuess < rndNum) {
+                        System.out.println("Die geratene Zahl ist niedriger als die Geheimzahl!");
+                    }
+                    else if (rndNumGuess > 100) {
+                        System.out.println("Bitte geben Sie eine Zahl zwischen 1-100 ein...");
+                        if (numOfGuesses > 0) {
+                            numOfGuesses--;
+                        }
+                    }
+                    else if (rndNumGuess > rndNum) {
+                        System.out.println("Die geratene Zahl ist grösser als die Geheimzahl!");
+                    }
+                    else if (rndNumGuess == rndNum)
+                    {
+                        System.out.println("Die Geheimzahl wurde erraten!");
+                        System.out.println("Total Versuche: " + numOfGuesses);
+                        rndNumGuessed = true;
+                        
+                        long stopTime = System.currentTimeMillis() - startTime; // Stopwatch stoppt
+                        System.out.println("Sie haben " + stopTime / 1000 + " Sekunden gebraucht...");
+                        
+                        // Um Variabel von gameRestart zu bekommen
+                        Scanner restartSc = new Scanner(System.in);
+                        System.out.println("Wollen Sie nochmal spielen? y/n");
+                        String restart = restartSc.next();
+                    
+                        switch (restart) {
+                            case "y":
+                            case "Y":
+                                gameRestart = true;
+                                break;
+                            case "n":
+                            case "N":
+                                gameRestart = false;
+                                System.out.println("Goodbye.");
+                                break;
+                            default:
+                                gameRestart = false;
+                                System.out.println("what");
+                                break;
+                        }
+                    } 
+                } catch (InputMismatchException e) {
+                    System.out.println("Ich erwarte eine Zahl...");
+                    
+                    //Um mismatch inputs von den numOfGuesses zu subtrahieren
+                    if (numOfGuesses > 0)
+                    {
+                        numOfGuesses--;
+                    }
+                } 
+            }          
+        } 
+    }
+}
+
